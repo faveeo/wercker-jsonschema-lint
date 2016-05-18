@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import contextlib
 import json
 import logging
 import sys
@@ -24,24 +25,34 @@ parser.add_argument(
 parser.add_argument(
     '--schema', '-s',
     type=unicode,
-    help='URL of the schema to be used for validation',
-    required=True
+    help='URL of a default schema to be used for validation, if JSON does not specify one. Default: %(default)s',
+    default='http://json-schema.org/schema'
 )
 
+schemas = {}
 
-def lint(include, schema):
-    logger.info('Loading schema at "%s"...', schema)
-    json_schema_file = urllib.urlopen(schema).read()
-    schema = json.loads(json_schema_file)
 
-    logger.info('Schema loaded')
+def determine_validation_schema(document, default):
+    doc_schema = document.get('$schema', default)
+
+    if doc_schema not in schemas:
+        logger.info('Loading schema at "%s"...', doc_schema)
+        with contextlib.closing(urllib.urlopen(doc_schema)) as schema_content:
+            schema = json.load(schema_content)
+            schemas[doc_schema] = schema
+            logger.info('Schema loaded')
+
+    return schemas[doc_schema]
+
+
+def lint(include, schema=None):
     logger.info('Validating files with pattern "%s"...', include)
-
     for path in iglob(include):
         logger.info('Validating file "%s".', path)
         with open(path, 'rb') as f:
             document = json.load(f)
-            validate(document, schema, format_checker=FormatChecker())
+            validation_schema = determine_validation_schema(document, schema)
+            validate(document, validation_schema, format_checker=FormatChecker())
 
     logger.info('All files validated.')
 

@@ -1,6 +1,6 @@
 # wercker-jsonschema-lint
 
-This [Wercker](http://wercker.com/) step validates a JSON file according to its schema.
+This [Wercker](http://wercker.com/) step validates a JSON file according to a schema.
 
 This step must be used with a box containing Python 2.7 and Pip.
 
@@ -9,13 +9,13 @@ This step must be used with a box containing Python 2.7 and Pip.
 
 | Release date | Step version |
 | -------------| -------------|
-| 2016-05-17   | 0.1          |
+| 2016-05-18   | 0.1          |
 
 
 ## Options
 
 * `include` (required) A glob pattern of files to lint
-* `schema` (required) Schema URL
+* `schema` (optional) URL of a default schema to be used for validation, if JSON does not specify one. Default: http://json-schema.org/schema
 
 ## Example
 
@@ -25,4 +25,5 @@ build:
     ...
     - 1science/jsonschema-lint:
         include: **.json
+        schema: http://json-schema.org/schema
 ```
