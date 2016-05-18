@@ -10,4 +10,4 @@ properties:
         required: true
     schema:
         type: string
-        required: true
+        required: false
