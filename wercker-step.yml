@@ -1,0 +1,13 @@
+name: jsonschema-lint
+version: 0.1
+description: Validates a JSON file according to its schema.
+  - lint
+  - json
+  - jsonschema
+properties:
+  include:
+    type: string
+    required: true
+  schema:
+    type: string
+    required: true
