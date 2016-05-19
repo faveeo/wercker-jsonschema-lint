@@ -1,5 +1,5 @@
 name: jsonschema-lint
-version: 0.0.2
+version: 0.0.3
 description: Validates a JSON file according to its schema, or a default schema.
     - lint
     - json
@@ -11,3 +11,4 @@ properties:
     schema:
         type: string
         required: false
+        default: http://json-schema.org/schema

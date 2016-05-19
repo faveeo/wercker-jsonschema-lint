@@ -9,13 +9,14 @@ This step must be used with a box containing Python 2.7 and Pip.
 
 | Release date | Step version |
 | -------------| -------------|
+| 2016-05-19   | 0.0.3        |
 | 2016-05-19   | 0.0.2        |
 | 2016-05-18   | 0.0.1        |
 
 
 ## Options
 
-* `include` (required) A glob pattern of files to lint
+* `include` (required) A glob pattern of files to validate, rooted in the output directory. ($WERCKER_OUTPUT_DIR)
 * `schema` (optional) URL of a default schema to be used for validation, if JSON does not specify one. Default: http://json-schema.org/schema
 
 ## Example
