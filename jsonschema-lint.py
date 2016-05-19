@@ -45,7 +45,7 @@ def determine_validation_schema(document, default):
     return schemas[doc_schema]
 
 
-def lint(include, schema=None):
+def lint(include, schema):
     logger.info('Validating files with pattern "%s"...', include)
     for path in iglob(include):
         logger.info('Validating file "%s".', path)
