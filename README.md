@@ -9,6 +9,7 @@ This step must be used with a box containing Python 2.7 and Pip.
 
 | Release date | Step version |
 | -------------| -------------|
+| 2017-05-15   | 0.0.4        |
 | 2016-05-19   | 0.0.3        |
 | 2016-05-19   | 0.0.2        |
 | 2016-05-18   | 0.0.1        |
