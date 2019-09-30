@@ -7,7 +7,9 @@ import logging
 import sys
 import urllib
 from argparse import ArgumentParser
-from glob import iglob
+
+import fnmatch
+import os
 
 from jsonschema import validate, FormatChecker
 
@@ -17,16 +19,22 @@ logger.setLevel(logging.INFO)
 
 parser = ArgumentParser(description='Validates JSON files based on a schema.')
 parser.add_argument(
-    '--include', '-i',
+    '--filepattern', '-f',
     type=unicode,
     help='Glob pattern of files to validate',
+    required=True
+)
+parser.add_argument(
+    '--root', '-r',
+    type=unicode,
+    help='root folder to validate recursively',
     required=True
 )
 parser.add_argument(
     '--schema', '-s',
     type=unicode,
     help='URL of a default schema to be used for validation, if JSON does not specify one. Default: %(default)s',
-    default='http://json-schema.org/schema'
+    default='http://json-schema.org/draft-03/hyper-schema'
 )
 
 schemas = {}
@@ -45,18 +53,26 @@ def determine_validation_schema(document, default):
     return schemas[doc_schema]
 
 
-def lint(include, schema):
-    logger.info('Validating files with pattern "%s"...', include)
-    for path in iglob(include):
-        logger.info('Validating file "%s".', path)
-        with open(path, 'rb') as f:
-            document = json.load(f)
-            validation_schema = determine_validation_schema(document, schema)
-            validate(document, validation_schema, format_checker=FormatChecker())
+def lint(include, pattern, schema):
+    logger.info('Validating files in %s with pattern "%s"...', include, pattern)
+
+    for root, dirnames, filenames in os.walk(include):
+        for filename in fnmatch.filter(filenames, pattern):
+            file = os.path.join(root, filename)
+            logger.info('Validating file "%s".', file)
+            with open(file, 'rb') as f:
+                try:
+                    document = json.load(f)
+                except ValueError as error:
+                    print("invalid json:", file, error)
+
+                validation_schema = determine_validation_schema(document, schema)
+                validate(document, validation_schema, format_checker=FormatChecker())
 
     logger.info('All files validated.')
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    lint(args.include, args.schema)
+
+    lint(args.root, args.filepattern, args.schema)
