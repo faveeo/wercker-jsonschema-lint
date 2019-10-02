@@ -5,13 +5,13 @@ description: Validates JSON files recursively according to a given schema, or a 
     - json
     - jsonschema
 properties:
-    path:
+    - name: path
         type: string
         required: true
-    filepattern:
+    - name: filepattern
         type: string
         required: true
-    schema:
+    - name: schema
         type: string
         required: false
         default: "http://json-schema.org/draft-03/hyper-schema"
