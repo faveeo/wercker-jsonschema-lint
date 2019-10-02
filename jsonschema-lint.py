@@ -64,7 +64,8 @@ def lint(include, pattern, schema):
                 try:
                     document = json.load(f)
                 except ValueError as error:
-                    print("invalid json:", file, error)
+                    print 'invalid json:', file, error
+                    raise
 
                 validation_schema = determine_validation_schema(document, schema)
                 validate(document, validation_schema, format_checker=FormatChecker())
