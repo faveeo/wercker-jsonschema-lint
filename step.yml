@@ -10,8 +10,7 @@ properties:
         required: true
     filepattern:
         type: string
-        required: false
-        default: "*.json"
+        required: true
     schema:
         type: string
         required: false

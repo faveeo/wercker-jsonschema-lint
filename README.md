@@ -31,6 +31,6 @@ build:
   steps:
     ...
     - faveeo/jsonschema-lint:
-        filepattern: **.json
+        filepattern: "*.json"
         schema: http://json-schema.org/draft-03/schema
 ```
