@@ -1,6 +1,7 @@
 name: jsonschema-lint
 version: 0.0.5
-description: Validates JSON files recursively according to a given schema, or a default schema.
+summary: Validates JSON files recursively according to a given schema, or a default schema.
+tags:
     - lint
     - json
     - jsonschema
