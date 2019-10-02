@@ -19,16 +19,16 @@ logger.setLevel(logging.INFO)
 
 parser = ArgumentParser(description='Validates JSON files based on a schema.')
 parser.add_argument(
-    '--filepattern', '-f',
+    '--path', '-p',
     type=unicode,
-    help='Glob pattern of files to validate',
+    help='path of folder to validate recursively',
     required=True
 )
 parser.add_argument(
-    '--root', '-r',
+    '--filepattern', '-f',
     type=unicode,
-    help='root folder to validate recursively',
-    required=True
+    help='Glob pattern of files to validate',
+    default='*.json'
 )
 parser.add_argument(
     '--schema', '-s',
@@ -75,4 +75,4 @@ def lint(include, pattern, schema):
 if __name__ == '__main__':
     args = parser.parse_args()
 
-    lint(args.root, args.filepattern, args.schema)
+    lint(args.path, args.filepattern, args.schema)
