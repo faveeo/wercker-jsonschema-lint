@@ -6,13 +6,13 @@ tags:
     - json
     - jsonschema
 properties:
-- name: path
-    type: string
-    required: true
-- name: filepattern
-    type: string
-    required: true
-- name: schema
-    type: string
-    required: false
-    default: http://json-schema.org/draft-03/hyper-schema
+    - name: path
+        type: string
+        required: true
+    - name: filepattern
+        type: string
+        required: true
+    - name: schema
+        type: string
+        required: false
+        default: http://json-schema.org/draft-03/hyper-schema
